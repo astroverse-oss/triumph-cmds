@@ -21,7 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jetbrains.annotations;
+package dev.triumphteam.cmd.velocity.message;
 
-public @interface UnknownNullability {
+import dev.triumphteam.cmd.core.message.context.AbstractMessageContext;
+import dev.triumphteam.cmd.velocity.CommandPermission;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
+public final class NoPermissionMessageContext extends AbstractMessageContext {
+
+    private final CommandPermission permission;
+
+    public NoPermissionMessageContext(
+            final @NotNull String command,
+            final @NotNull String subCommand,
+            final @NotNull CommandPermission permission
+    ) {
+        super(command, subCommand);
+        this.permission = permission;
+    }
+
+    public @NotNull List<@NotNull String> getNodes() {
+        return permission.getNodes();
+    }
 }

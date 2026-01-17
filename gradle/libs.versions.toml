@@ -8,6 +8,7 @@ assertj = "3.22.0"
 
 # Minecraft
 spigot = "1.18.2-R0.1-SNAPSHOT"
+velocity = "3.4.0-SNAPSHOT"
 
 # Discord
 jda = "5.0.0-alpha.18"
@@ -24,6 +25,7 @@ assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 
 # Minecraft
 spigot = { module = "org.spigotmc:spigot-api", version.ref = "spigot" }
+velocity = { module = "com.velocitypowered:velocity-api", version.ref = "velocity" }
 
 # Discord
 jda = { module = "net.dv8tion:JDA", version.ref = "jda" }

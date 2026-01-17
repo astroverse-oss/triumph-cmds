@@ -21,7 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.jetbrains.annotations;
+package dev.triumphteam.cmd.velocity.annotation;
 
-public @interface UnknownNullability {
+import java.lang.annotation.*;
+
+/**
+ * Annotate a method using this Annotation to add a required permission.
+ */
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD, ElementType.TYPE})
+@Inherited
+public @interface Permission {
+
+    /**
+     * The permission.
+     *
+     * @return The permission's main node.
+     */
+    String[] value();
+
+    /**
+     * A brief description of the permission.
+     *
+     * @return The permission's description.
+     */
+    String description() default "";
+
 }

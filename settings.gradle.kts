@@ -3,6 +3,13 @@ dependencyResolutionManagement {
     repositories.gradlePluginPortal()
 }
 
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven("https://mvn.ultradev.app/snapshots")
+    }
+}
+
 rootProject.name = "triumph-cmd"
 
 listOf(
@@ -17,13 +24,11 @@ listOf(
     "minecraft/velocity",
     "discord/jda-common",
     "discord/jda-prefixed",
-    "discord/jda-slash",
+    "discord/jda-slash"
 ).forEach {
     val (folder, name) = it.split('/')
     includeProject(name, folder)
 }
-
-include("test-module")
 
 fun includeProject(name: String) {
     include(name) {

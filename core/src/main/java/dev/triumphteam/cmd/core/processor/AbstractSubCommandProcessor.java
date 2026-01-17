@@ -87,14 +87,7 @@ import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
@@ -507,7 +500,14 @@ public abstract class AbstractSubCommandProcessor<S> {
             return parameter.getAnnotation(ArgName.class).value();
         }
 
-        return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_HYPHEN, parameter.getName());
+        try {
+            Class.forName("com.google.common.base.CaseFormat");
+            return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_HYPHEN, parameter.getName());
+        } catch (ClassNotFoundException e) {
+            return parameter.getName()
+                    .replaceAll("([a-z])([A-Z])", "$1-$2")
+                    .toLowerCase(Locale.ROOT);
+        }
     }
 
     /**

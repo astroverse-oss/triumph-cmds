@@ -8,14 +8,6 @@ tasks {
         publications {
             create<MavenPublication>("maven") {
                 from(components["java"])
-                versionMapping {
-                    usage("java-api") {
-                        fromResolutionOf("runtimeClasspath")
-                    }
-                    usage("java-runtime") {
-                        fromResolutionResult()
-                    }
-                }
 
                 pom {
                     name.set("triumph-cmds")
@@ -36,7 +28,6 @@ tasks {
                         }
                     }
 
-                    // Change later
                     scm {
                         connection.set("scm:git:git://github.com/TriumphTeam/triumph-cmds.git")
                         developerConnection.set("scm:git:ssh://github.com:TriumphTeam/triumph-cmds.git")
@@ -46,14 +37,14 @@ tasks {
             }
         }
 
+        val version = project.version.toString()
+        val type = if (version.endsWith("SNAPSHOT") || version.endsWith("DEV")) "snapshots" else "releases"
+
         repositories {
             maven {
-                credentials {
-                    username = System.getenv("REPO_USER")
-                    password = System.getenv("REPO_PASS")
-                }
-
-                url = uri("https://repo.triumphteam.dev/snapshots/")
+                name = "astroverse"
+                url = uri("https://repo.astroverse.es/repository/maven-${type}/")
+                credentials(PasswordCredentials::class)
             }
         }
     }

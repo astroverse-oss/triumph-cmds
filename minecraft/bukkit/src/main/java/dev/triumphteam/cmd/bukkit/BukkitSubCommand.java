@@ -47,19 +47,27 @@ public final class BukkitSubCommand<S> extends AbstractSubCommand<S> {
     }
 
     public @NotNull List<@NotNull String> getSuggestions(final @NotNull S sender, final @NotNull List<@NotNull String> args) {
-        final int index = args.size() - 1;
-        final InternalArgument<S, ?> internalArgument = getArgument(index);
-        if (internalArgument == null) return emptyList();
+        if (args.isEmpty()) {
+            final InternalArgument<S, ?> first = getArgument(0);
+            if (first == null) return emptyList();
 
-        final List<String> trimmed;
-        if (internalArgument instanceof LimitlessInternalArgument) {
-            trimmed = args.subList(getArguments().size() - 1, args.size());
+            final SuggestionContext context = new SuggestionContext(args, getParentName(), getName());
+            return first.suggestions(sender, List.of(), context);
         } else {
-            trimmed = args.subList(index, args.size());
-        }
+            final int index = args.size() - 1;
+            final InternalArgument<S, ?> internalArgument = getArgument(index);
+            if (internalArgument == null) return emptyList();
 
-        final SuggestionContext context = new SuggestionContext(args, getParentName(), getName());
-        return internalArgument.suggestions(sender, trimmed, context);
+            final List<String> trimmed;
+            if (internalArgument instanceof LimitlessInternalArgument) {
+                trimmed = args.subList(getArguments().size() - 1, args.size());
+            } else {
+                trimmed = args.subList(index, args.size());
+            }
+
+            final SuggestionContext context = new SuggestionContext(args, getParentName(), getName());
+            return internalArgument.suggestions(sender, trimmed, context);
+        }
     }
 
     /**

@@ -206,6 +206,7 @@ public abstract class AbstractSubCommand<S> implements SubCommand<S> {
     }
 
     protected @Nullable InternalArgument<S, ?> getArgument(final int index) {
+        if (index < 0) return null;
         final int size = internalArguments.size();
         if (size == 0) return null;
         if (index >= size) {
